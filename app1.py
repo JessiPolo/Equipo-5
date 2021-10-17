@@ -6,6 +6,30 @@ from flask import request
 
 app = Flask(__name__)
 
+
+lista_pacientes = {
+    'marcos@gmail.com': {'nombres': 'Marcos', 'apellidos':'Sanchez', 'email': 'marcos@gmail.com', 'item': 'item 1', 'identificacion': '213', 'telefono': '134342', 'contrasena': '1234'},
+    'dn@gmail.com': {'nombres': 'Daniela', 'apellidos':'Giraldo', 'email': 'dn@gmail.com', 'item': 'item 1', 'identificacion': '215343', 'telefono': '145342', 'contrasena': '432'}
+}
+lista_medicos = ["Pedro", "Carmen"]
+lista_admin = ["Stiven"]
+lista_comentarios = {
+"1": "Marcos: Muy buena atencion por parte de los medicos",
+"2": "Maria: Gracias por la pronta atencion",
+"3": "Dr. Pedro: Por este espacio no se pueden pedir citas, para ello vaya al apartado de citas"
+
+}
+lista_citas = {
+"medicogeneral":"Pedro: 6am - 12pm", 
+"psicologia":"Carmen: 8am - 3 pm", 
+"neurologia": "Carlos: 12pm - 8 pm", 
+"cuidado del embarazo":"Laura: 12pm - 6 pm", 
+"pediatria": "Karol: 7am - 3 pm", 
+"cardiologia":"Mario: 6 am - 2 pm"}
+
+
+
+
 # VARIABLES
 sesion_iniciada = False
 sesion_paciente_iniciada = False
@@ -27,6 +51,7 @@ def inicio():
 def login_paciente():
     global sesion_paciente_iniciada
     sesion_paciente_iniciada = True
+    
     return render(
         "login/login_paciente/login_paciente.html" #,
         # sesion_paciente_iniciada=sesion_paciente_iniciada
@@ -106,6 +131,14 @@ def detalle_cita():
 # Pagina de paciente
 @app.route("/pagina_paciente", methods=["GET", "POST"])
 def pagina_paciente():
+    if request.method=="POST":
+        email = request.values("email")
+        contrasena = request.values("contrasena")
+        if email in lista_pacientes:
+            pass
+        else:
+            return redirect('/login_paciente')
+        
     return render("pagina_paciente/pagina_paciente.html")
 
 

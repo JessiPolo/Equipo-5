@@ -9,21 +9,31 @@
         <p>
             <label>Eliga la categoria de cita</label>
             <select>
-                <option value="value1">Cardiologia</option>
-                <option value="value2">Psicologia</option>
-                <option value="value3">Neurologia</option>
-                <option value="value4">Medico General</option>
-                <option value="value5">Ginecologia</option>
-                <option value="value6">Pediatria</option>
+                <option value="value1" name="cardiologia">Cardiologia</option>
+                <option value="value2" name="psicologia">Psicologia</option>
+                <option value="value3" name="neurologia">Neurologia</option>
+                <option value="value4" name="medicogeneral">Medico General</option>
+                <option value="value5" name="cuidado">Cuidado del embarazo</option>
+                <option value="value6" name="pediatria">Pediatria</option>
             </select>
         </p>
         <p>
-            <label>Eliga su medico</label>
-            <select>
-                <option value="value1">Ramiro Hernandez</option>
-                <option value="value2">Ximena Luque</option>
-            </select>
+            <label>Digite su bombre</label>
+            <input type="text" name="nombre">
         </p>
-        <button type="submit" value="Apartar cita">Apartar cita</button>
+        <p>
+            <label>Digite el horario de su cita</label>
+            <select>
+               <option value="value1" name="opcion1">6am - 12pm</option>  
+               <option value="value2" name="opcion2">8am - 3pm</option>
+               <option value="value2" name="opcion3">12pm - 8pm</option>
+               <option value="value4" name="opcion4">12pm - 6pm</option>  
+               <option value="value5" name="opcion5">7am - 3pm</option>
+               <option value="value6" name="opcion6">6am - 2pm</option>     
+            </select>   
+        </p>
+        <p>
+            <button type="submit" value="Enviar">Enviar</button>
+        </p>
     </body>
 </html>
