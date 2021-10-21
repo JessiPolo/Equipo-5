@@ -11,6 +11,16 @@ lista_pacientes = {
     'marcos@gmail.com': {'nombres': 'Marcos', 'apellidos':'Sanchez', 'email': 'marcos@gmail.com', 'item': 'item 1', 'identificacion': '213', 'telefono': '134342', 'contrasena': '1234'},
     'dn@gmail.com': {'nombres': 'Daniela', 'apellidos':'Giraldo', 'email': 'dn@gmail.com', 'item': 'item 1', 'identificacion': '215343', 'telefono': '145342', 'contrasena': '432'}
 }
+
+lista_medicos = {
+    'marcos@gmail.com': {'nombres': 'Marcos', 'apellidos':'Sanchez', 'email': 'marcos@gmail.com', 'item': 'item 1', 'identificacion': '213', 'telefono': '134342', 'contrasena': '1234'},
+    'dn@gmail.com': {'nombres': 'Daniela', 'apellidos':'Giraldo', 'email': 'dn@gmail.com', 'item': 'item 1', 'identificacion': '215343', 'telefono': '145342', 'contrasena': '432'}
+}
+
+lista_superadmin = {
+    'super@admin.edu.co': {'nombres': 'Carlos', 'apellidos':'Medina', 'email': 'super@admin.edu.co', 'item': 'item 1', 'identificacion': '4615651', 'telefono': '965263', 'contrasena': 'superadmin'},
+}
+
 lista_medicos = ["Pedro", "Carmen"]
 lista_admin = ["Stiven"]
 lista_comentarios = {
@@ -42,15 +52,16 @@ regis_medico = False
 
 
 # Home
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
+@app.route("/inicio", methods=["GET", "POST"])
 def inicio():
     return render("inicio/inicio.html")
 
 # Login
 @app.route("/login_paciente", methods=["GET", "POST"])
 def login_paciente():
-    global sesion_paciente_iniciada
-    sesion_paciente_iniciada = True
+    # global sesion_paciente_iniciada
+    # sesion_paciente_iniciada = True
     
     return render(
         "login/login_paciente/login_paciente.html" #,
@@ -59,8 +70,8 @@ def login_paciente():
 
 @app.route("/login_medico", methods=["GET", "POST"])
 def login_medico():
-    global sesion_medico_iniciada
-    sesion_medico_iniciada = True
+    # global sesion_medico_iniciada
+    # sesion_medico_iniciada = True
     return render(
         "login/login_medico/login_medico.html"#,
         # sesion_medico_iniciada=sesion_medico_iniciada
@@ -68,8 +79,8 @@ def login_medico():
 
 @app.route("/login_superadmin", methods=["GET", "POST"])
 def login_super():
-    global sesion_super_iniciada
-    sesion_super_iniciada = True
+    # global sesion_super_iniciada
+    # sesion_super_iniciada = True
     return render(
         "login/login_superadmin/login_superadmin.html"#,
         # sesion_super_iniciada=sesion_super_iniciada
@@ -79,8 +90,8 @@ def login_super():
 # Registro
 @app.route("/registro_paciente", methods=["GET", "POST"])
 def registro_paciente():
-    global regis_paciente
-    regis_paciente = True
+    # global regis_paciente
+    # regis_paciente = True
     return render(
         "registro/registro_paciente/registro_paciente.html"#,
         # regis_paciente=regis_paciente
@@ -88,8 +99,8 @@ def registro_paciente():
 
 @app.route("/registro_medico", methods=["GET", "POST"])
 def registro_medico():
-    global regis_medico
-    regis_medico = True
+    # global regis_medico
+    # regis_medico = True
     return render(
         "registro/registro_medico/registro_medico.html"#,
         # regis_medico=regis_medico
@@ -129,15 +140,29 @@ def detalle_cita():
 
 
 # Pagina de paciente
-@app.route("/pagina_paciente", methods=["GET", "POST"])
+@app.route("/pagina_paciente", methods=["POST"])
 def pagina_paciente():
     if request.method=="POST":
-        email = request.values("email")
-        contrasena = request.values("contrasena")
-        if email in lista_pacientes:
-            pass
-        else:
+        email = request.form["email"]
+        contrasena = request.form["contrasena"]
+        # print(email)
+        # print(contrasena)
+        # return render('pagina_paciente/pagina_paciente.html')
+        if lista_pacientes[email] != None:
+            # print(email)
+            # print(contrasena)
+            if lista_pacientes[email]['contrasena']==contrasena:
+                sesion_paciente_iniciada = True
+                print(sesion_paciente_iniciada)
+                return render(
+                    'pagina_paciente/pagina_paciente.html',
+                    # sesion_paciente_iniciada=sesion_paciente_iniciada
+                )
+            print('Contraseña incorrecta')
             return redirect('/login_paciente')
+        else:
+            print('Paciente no registrado')
+            return render('login_paciente/login_paciente.html')
         
     return render("pagina_paciente/pagina_paciente.html")
 
